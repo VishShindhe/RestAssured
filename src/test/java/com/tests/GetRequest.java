@@ -14,7 +14,7 @@ public class GetRequest {
     @Test
     public void getTest(){
         Response response = given().get("http://localhost:3000/employees");
-        System.out.println(response.prettyPrint());
+        response.prettyPrint();
         System.out.println("Status code " + response.getStatusCode());
         System.out.println("Response Time " + response.getTime());
         System.out.println("Content-Type is: "+ response.getHeader("Content-Type"));
