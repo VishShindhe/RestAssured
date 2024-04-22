@@ -4,7 +4,9 @@ import com.github.javafaker.Faker;
 import com.pojo.Employee;
 import com.pojo.FavFood;
 import io.restassured.http.ContentType;
+import io.restassured.module.jsv.JsonSchemaValidator;
 import io.restassured.response.Response;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import java.util.ArrayList;
@@ -51,6 +53,16 @@ public class PostRequestUsingPojo {
                 .body(employee)
                 .post("http://localhost:3000/employees");
         response.prettyPrint();
+
+        Assert.assertEquals(response.getStatusCode(),201);
+        System.out.println(response.jsonPath().getString("email"));
+        System.out.println(response.jsonPath().getList("jobs"));
+
+        Employee deserialisedEmp = response.as(Employee.class); //json --> class
+        System.out.println(deserialisedEmp.getEmail());
+        System.out.println(deserialisedEmp.getJobs());
+
+        response.then().body(JsonSchemaValidator.matchesJsonSchemaInClasspath("schema.json"));
 
     }
 }
