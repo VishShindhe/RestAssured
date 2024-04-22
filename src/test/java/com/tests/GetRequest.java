@@ -26,4 +26,14 @@ public class GetRequest {
             System.out.println(header.getName() +": "+header.getValue());
         }
     }
+
+    @Test
+    public void getEmployee(){
+        given()
+                .queryParam("id", 3)
+                .log()
+                .all()
+                .get("http://localhost:3000/employees/")
+                .prettyPrint();
+    }
 }
